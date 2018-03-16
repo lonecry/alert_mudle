@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang = "zh-CN">
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0"/>
+    <title></title>
+    <style>
+        canvas {
+            display: block;
+            border: 1px solid red;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            margin-top: 200px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<canvas id = "canvas"></canvas>
+<script>
+    var canvas = document.getElementById('canvas')
+    canvas.width = 200;
+    canvas.height = 200;
+    var content = canvas.getContext('2d')
+    var i = 0;
+    time = 3;
+    var stop = null;
+    var angle = (2 * Math.PI) / 360;
+
+
+    drawCrircle()
+
+    function drawCrircle(){
+        if(i < 362){
+            console.log(angle * i)
+            content.clearRect(0,0,200,200)
+            // content.translate(100,100)
+            content.save()
+            // content.rotate(0.5 * Math.PI);
+            if((angle * i) < 0.5 * Math.PI){
+                k = 1.5 * Math.PI + angle * i
+            } else {
+                k = angle * i - 0.5 * Math.PI
+            }
+            content.save()
+            content.beginPath()
+            content.strokeStyle = '#ff7875';
+            content.lineWidth = 10
+            content.arc(100,100,80,1.5 * Math.PI,k);
+            content.stroke()
+            content.closePath()
+            content.restore()
+
+            content.save()
+            content.beginPath()
+            content.strokeStyle = '#ffcb00';
+            content.lineWidth = 10
+            content.lineCap = "round";
+            content.arc(100,100,80,k,1.5 * Math.PI);
+            content.stroke()
+            content.closePath()
+            content.restore()
+            var t = 10 - Math.floor(i / 36)
+            if(t < 10){
+                t = '0' + t
+            }
+            content.save()
+            content.fillStyle = '#ffcb00';
+            content.font = "80px Arial";
+            content.fillText(t,55,125);
+            content.restore()
+            i = i + 0.65;
+            window.requestAnimationFrame(drawCrircle);
+        }
+        else {
+            // alert('Time out')
+            stop = requestAnimationFrame(drawCrircle);
+            window.cancelAnimationFrame(stop);//可以取消该次动画。
+        }
+    }
+
+
+</script>
+</body>
+</html>

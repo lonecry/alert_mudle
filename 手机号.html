@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<script src="js/jquery-1.4.2.min.js"></script>
+	<style type="text/css">
+	</style>
+	<title>手机号码</title>
+</head>
+<body>
+</body>
+<script>
+	$(function(){
+		var length = 0;
+
+		$.ajax({
+			type    :"GET",
+			url     :"http://dhudong.cztv.com/user_comment/getAllComment?data_id=251345",
+			dataType:"json",
+			success :function(obj){
+				length = obj.data.counts;
+				$.ajax({
+					type    :"GET",
+					url     :"http://dhudong.cztv.com/user_comment/getComment?data_id=251345&limit=1346&page=1",
+					dataType:"json",
+					success :function(obj){
+						for(var i = 0 ; i < length ; i++){
+							//							var cell = obj.data[i].username.split('|')[1];
+							var cell = obj.data[i].content;
+							var html = '<span>' + cell + '</span><br>';
+							if(cell){
+								$('body').append(html)
+							}
+						}
+					}
+
+				});
+			}
+
+		});
+
+	})
+</script>
+</html>
